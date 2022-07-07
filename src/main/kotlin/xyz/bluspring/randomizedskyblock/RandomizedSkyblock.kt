@@ -12,6 +12,7 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
+import net.minecraft.world.gen.WorldPreset
 
 private const val TICKS_30 = 600
 private const val TICKS_60 = 1200
@@ -92,6 +93,6 @@ class RandomizedSkyblock : ModInitializer {
 
     companion object {
         val bossBarId = Identifier("randomizedskyblock", "timer")
-        val randomizedSkyblockWorld = RegistryKey.of(Registry.WORLD_PRESET_KEY, Identifier("randomized_skyblock_world"))
+        val randomizedSkyblockWorld: RegistryKey<WorldPreset> = RegistryKey.of(Registry.WORLD_PRESET_KEY, Identifier("randomized_skyblock_world"))
     }
 }
