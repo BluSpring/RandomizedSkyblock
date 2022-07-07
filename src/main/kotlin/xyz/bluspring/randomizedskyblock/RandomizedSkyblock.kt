@@ -11,6 +11,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
+import net.minecraft.util.registry.RegistryKey
 
 private const val TICKS_30 = 600
 private const val TICKS_60 = 1200
@@ -23,6 +24,7 @@ class RandomizedSkyblock : ModInitializer {
     private lateinit var thread: Thread
 
     override fun onInitialize() {
+        // Randomized item setup
         randomItems = Registry.ITEM.filter {
             val key = Registry.ITEM.getKey(it).get()
 
@@ -90,5 +92,6 @@ class RandomizedSkyblock : ModInitializer {
 
     companion object {
         val bossBarId = Identifier("randomizedskyblock", "timer")
+        val randomizedSkyblockWorld = RegistryKey.of(Registry.WORLD_PRESET_KEY, Identifier("randomized_skyblock_world"))
     }
 }
