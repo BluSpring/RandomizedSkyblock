@@ -9,6 +9,7 @@
     "WorldPresetsRegistrarMixin"
   ],
   "client": [
+    "MoreOptionsDialogMixin"
   ],
   "injectors": {
     "defaultRequire": 1
