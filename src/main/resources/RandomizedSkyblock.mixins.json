@@ -4,6 +4,7 @@
   "package": "xyz.bluspring.randomizedskyblock.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ChunkGeneratorsMixin",
     "PlayerManagerMixin",
     "WorldPresetsRegistrarMixin"
   ],
