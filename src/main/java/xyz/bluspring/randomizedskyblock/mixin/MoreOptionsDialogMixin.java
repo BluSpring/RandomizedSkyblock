@@ -11,8 +11,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.bluspring.randomizedskyblock.RandomizedSkyblock;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Mixin(MoreOptionsDialog.class)
 public class MoreOptionsDialogMixin {
@@ -22,9 +24,10 @@ public class MoreOptionsDialogMixin {
 
         cir.setReturnValue(
                 list.map(entryList -> {
-                    entryList.add(presetRegistry.getOrCreateEntry(RandomizedSkyblock.Companion.getRandomizedSkyblockWorld()));
+                    var mutable = new ArrayList<>(entryList);
+                    mutable.add(presetRegistry.getOrCreateEntry(RandomizedSkyblock.Companion.getRandomizedSkyblockWorld()));
 
-                    return entryList;
+                    return mutable;
                 })
         );
     }
