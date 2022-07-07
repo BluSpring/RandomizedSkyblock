@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "randomizedskyblock",
+  "version": "${version}",
+  "name": "RandomizedSkyblock",
+  "description": "Randomized Skyblock for SilckySilver",
+  "authors": [
+    "BluSpring"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/randomizedskyblock/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "xyz.bluspring.randomizedskyblock.RandomizedSkyblock"
+    ]
+  },
+  "mixins": [
+    "RandomizedSkyblock.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.8",
+    "fabric": "*",
+    "minecraft": "1.19"
+  }
+}
