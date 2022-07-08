@@ -35,33 +35,4 @@ public class PlayerManagerMixin {
 
         bossBar.addPlayer(player);
     }
-
-    @Inject(at = @At("TAIL"), method = "onPlayerConnect")
-    public void addBlockBelowPlayer(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
-        var nbtCompound = compoundMap.get(player);
-
-        if (nbtCompound == null) {
-            // Set bedrock below player.
-
-            var map = RandomizedSkyblock.Companion.getBlocksToPlaceUponLoading();
-
-            List<BlockPos> list = map.getOrDefault(player.getWorld(), new ArrayList<>());
-            list.add(player.getBlockPos().mutableCopy().add(0, -1, 0));
-
-            map.put(player.getWorld(), list);
-        }
-
-        compoundMap.remove(player);
-    }
-
-    // Y'know, people would not make this incredibly stupid workaround normally,
-    // but because local capture wasn't working, I had no other choice.
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;loadPlayerData(Lnet/minecraft/server/network/ServerPlayerEntity;)Lnet/minecraft/nbt/NbtCompound;"), method = "onPlayerConnect")
-    public NbtCompound incrediblyStupidWorkaroundToGetAroundBrokenLocalCapture(PlayerManager instance, ServerPlayerEntity player) {
-        var nbtCompound = instance.loadPlayerData(player);
-
-        compoundMap.put(player, nbtCompound);
-
-        return nbtCompound;
-    }
 }
