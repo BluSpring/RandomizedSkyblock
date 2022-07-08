@@ -44,9 +44,8 @@ class RandomizedSkyblock : ModInitializer {
                 ServerTickEvents.END_SERVER_TICK.register { _ ->
                     ticks++
 
-                    bossBar.percent = ((TICKS_60 - ticks) / TICKS_60).toFloat()
-
                     if (ticks % 20 == 0) {
+                        bossBar.percent = ((TICKS_60.toFloat() - ticks.toFloat()) / TICKS_60.toFloat())
                         bossBar.name = formatText(60 - (ticks / 20))
                     }
 
