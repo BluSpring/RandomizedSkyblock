@@ -6,6 +6,7 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,7 +16,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.bluspring.randomizedskyblock.RandomizedSkyblock;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 @Mixin(PlayerManager.class)
 public class PlayerManagerMixin {
@@ -39,7 +42,13 @@ public class PlayerManagerMixin {
 
         if (nbtCompound == null) {
             // Set bedrock below player.
-            player.getWorld().setBlockState(player.getBlockPos().add(0, -1, 0), Blocks.BEDROCK.getDefaultState());
+
+            var map = RandomizedSkyblock.Companion.getBlocksToPlaceUponLoading();
+
+            List<BlockPos> list = map.containsKey(player.getWorld()) ? Collections.emptyList() : map.get(player.getWorld());
+            list.add(player.getBlockPos().add(0, -1, 0));
+
+            map.put(player.getWorld(), list);
         }
 
         compoundMap.remove(player);

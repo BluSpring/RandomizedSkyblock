@@ -1,17 +1,23 @@
 package xyz.bluspring.randomizedskyblock
 
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.minecraft.block.*
 import net.minecraft.entity.boss.BossBar
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.registry.Registry
 import net.minecraft.util.registry.RegistryKey
+import net.minecraft.world.World
+import net.minecraft.world.chunk.WorldChunk
 import net.minecraft.world.gen.WorldPreset
 
 private const val TICKS_30 = 600
@@ -65,10 +71,31 @@ class RandomizedSkyblock : ModInitializer {
 
             thread.name = "RandomizedSkyblock Ticking Thread"
             thread.start()
+
+            ServerChunkEvents.CHUNK_LOAD.register(ServerChunkEvents.Load { world, chunk ->
+                val blockPosList = blocksToPlaceUponLoading[world] ?: return@Load
+
+                val blockPosInThisChunk = blockPosList.filter { blockPos ->
+                    val chunkPos = ChunkPos(blockPos)
+                    chunkPos.x == chunk.pos.x && chunkPos.z == chunk.pos.z
+                }
+
+                blockPosInThisChunk.forEach { blockPos ->
+                    world.setBlockState(blockPos, Blocks.BEDROCK.defaultState)
+
+                    blockPosList.remove(blockPos)
+                }
+
+                if (blockPosList.isEmpty()) {
+                    blocksToPlaceUponLoading.remove(world)
+                }
+            })
         }
 
         ServerLifecycleEvents.SERVER_STOPPING.register {
             thread.interrupt()
+
+            blocksToPlaceUponLoading.clear()
         }
     }
 
@@ -94,5 +121,7 @@ class RandomizedSkyblock : ModInitializer {
     companion object {
         val bossBarId = Identifier("randomizedskyblock", "timer")
         val randomizedSkyblockWorld: RegistryKey<WorldPreset> = RegistryKey.of(Registry.WORLD_PRESET_KEY, Identifier("randomized_skyblock_world"))
+
+        val blocksToPlaceUponLoading = mutableMapOf<World, MutableList<BlockPos>>()
     }
 }
