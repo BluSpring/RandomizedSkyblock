@@ -81,7 +81,7 @@ class RandomizedSkyblock : ModInitializer {
                 }
 
                 blockPosInThisChunk.forEach { blockPos ->
-                    world.setBlockState(blockPos, Blocks.BEDROCK.defaultState)
+                    world.setBlockState(blockPos, Blocks.STONE.defaultState)
 
                     blockPosList.remove(blockPos)
                 }
