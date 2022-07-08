@@ -1,0 +1,1 @@
+execute as @a if entity @s[tag=!joinedFirst] run function randomizedskyblock:place_block
