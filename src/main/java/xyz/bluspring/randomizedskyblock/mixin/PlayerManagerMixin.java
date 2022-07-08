@@ -45,7 +45,7 @@ public class PlayerManagerMixin {
 
             var map = RandomizedSkyblock.Companion.getBlocksToPlaceUponLoading();
 
-            List<BlockPos> list = map.containsKey(player.getWorld()) ? Collections.emptyList() : map.get(player.getWorld());
+            List<BlockPos> list = map.getOrDefault(player.getWorld(), Collections.emptyList());
             list.add(player.getBlockPos().add(0, -1, 0));
 
             map.put(player.getWorld(), list);
