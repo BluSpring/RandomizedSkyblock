@@ -24,8 +24,6 @@ import java.util.List;
 public class PlayerManagerMixin {
     @Shadow @Final private MinecraftServer server;
 
-    private HashMap<ServerPlayerEntity, NbtCompound> compoundMap = new HashMap<>();
-
     @Inject(at = @At("TAIL"), method = "onPlayerConnect")
     public void addToBossbar(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
         var bossBar = this.server.getBossBarManager().get(RandomizedSkyblock.Companion.getBossBarId());
