@@ -1,6 +1,5 @@
 package xyz.bluspring.randomizedskyblock.mixin;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.MinecraftServer;
@@ -16,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.bluspring.randomizedskyblock.RandomizedSkyblock;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -45,8 +45,8 @@ public class PlayerManagerMixin {
 
             var map = RandomizedSkyblock.Companion.getBlocksToPlaceUponLoading();
 
-            List<BlockPos> list = map.getOrDefault(player.getWorld(), Collections.emptyList());
-            list.add(player.getBlockPos().add(0, -1, 0));
+            List<BlockPos> list = map.getOrDefault(player.getWorld(), new ArrayList<>());
+            list.add(player.getBlockPos().mutableCopy().add(0, -1, 0));
 
             map.put(player.getWorld(), list);
         }
