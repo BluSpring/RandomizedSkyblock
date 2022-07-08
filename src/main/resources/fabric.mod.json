@@ -22,7 +22,8 @@
   "depends": {
     "fabricloader": ">=0.14.8",
     "fabric": "*",
-    "minecraft": "1.19"
+    "minecraft": "1.19",
+    "fabric-language-kotlin": "1.8.1+kotlin.1.7.0"
   },
   "accessWidener": "randomizedskyblock.accesswidener"
 }
