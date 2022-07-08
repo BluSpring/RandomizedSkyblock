@@ -72,7 +72,7 @@ class RandomizedSkyblock : ModInitializer {
     }
 
     private fun formatText(time: Int): Text {
-        return Text.of("Giving random blocks in ")
+        return Text.of("Giving random items in ")
             .copy()
             .formatted(Formatting.GREEN)
             .append(
