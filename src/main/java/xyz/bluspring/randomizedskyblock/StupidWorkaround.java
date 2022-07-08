@@ -31,7 +31,11 @@ public class StupidWorkaround extends ChunkGenerator {
     }
 
     public static Codec<VoidGenerator> getVoidGeneratorCodec() {
-        return RecordCodecBuilder.create((instance) -> createStructureSetRegistryGetter(instance).apply(instance, instance.stable(VoidGenerator::new)));
+        return RecordCodecBuilder.create(
+                (instance) ->
+                        createStructureSetRegistryGetter(instance)
+                                .apply(instance, instance.stable(VoidGenerator::new))
+        );
     }
 
     @Override

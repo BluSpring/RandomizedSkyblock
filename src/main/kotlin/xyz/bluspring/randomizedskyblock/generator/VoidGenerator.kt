@@ -64,6 +64,16 @@ class VoidGenerator(
         structureAccessor: StructureAccessor,
         chunk: Chunk
     ): CompletableFuture<Chunk> {
+        val mutable = BlockPos.Mutable()
+
+        for (y in 0..chunk.height) {
+            for (x in 0..16) {
+                for (z in 0..16) {
+                    chunk.setBlockState(mutable.set(x, y, z), Blocks.AIR.defaultState, false)
+                }
+            }
+        }
+
         return CompletableFuture.completedFuture(chunk)
     }
 
@@ -92,7 +102,7 @@ class VoidGenerator(
         noiseConfig: NoiseConfig
 
     ): VerticalBlockSample {
-        return VerticalBlockSample(world.bottomY, arrayOf(Blocks.AIR.defaultState))
+        return VerticalBlockSample(world.bottomY + 1, arrayOf())
     }
 
     override fun getDebugHudText(text: MutableList<String>, noiseConfig: NoiseConfig, pos: BlockPos) {
