@@ -91,6 +91,6 @@ class RandomizedSkyblock : ModInitializer {
 
     companion object {
         val bossBarId = Identifier("randomizedskyblock", "timer")
-        val randomizedSkyblockWorld: RegistryKey<WorldPreset> = RegistryKey.of(Registry.WORLD_PRESET_KEY, Identifier("randomized_skyblock_world"))
+        val randomizedSkyblockWorld: RegistryKey<WorldPreset> = RegistryKey.of(Registry.WORLD_PRESET_KEY, Identifier("default"))
     }
 }
